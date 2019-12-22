@@ -1,0 +1,24 @@
+---
+# Vault
+- name: Check if Vault is installed
+  shell: command -v vault >/dev/null 2>&1
+  register: vault_installed
+  changed_when: vault_installed.rc != 0
+  failed_when: false
+- name: Check Vault version
+  shell: vault --version
+  register: vault_installed_version
+  changed_when: vault_version not in vault_installed_version.stdout
+  failed_when: false
+- name: Download Vault
+  get_url:
+    url: https://releases.hashicorp.com/vault/{{ vault_version }}/vault_{{ vault_version }}_linux_amd64.zip
+    dest: /tmp/vault_{{ vault_version }}_linux_amd64.zip
+    checksum: "{{ vault_checksum }}"
+    mode: 0644
+  when: vault_installed is changed or vault_installed_version is changed
+- name: Install Vault
+  unarchive:
+    src: /tmp/vault_{{ vault_version }}_linux_amd64.zip
+    dest: /usr/local/bin/
+  when: vault_installed is changed or vault_installed_version is changed

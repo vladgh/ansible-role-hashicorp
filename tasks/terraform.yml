@@ -1,0 +1,24 @@
+---
+# Terraform
+- name: Check if Terraform is installed
+  shell: command -v terraform >/dev/null 2>&1
+  register: terraform_installed
+  changed_when: terraform_installed.rc != 0
+  failed_when: false
+- name: Check Terraform version
+  shell: terraform --version
+  register: terraform_installed_version
+  changed_when: terraform_version not in terraform_installed_version.stdout
+  failed_when: false
+- name: Download Terraform
+  get_url:
+    url: https://releases.hashicorp.com/terraform/{{ terraform_version }}/terraform_{{ terraform_version }}_linux_amd64.zip
+    dest: /tmp/terraform_{{ terraform_version }}_linux_amd64.zip
+    checksum: "{{ terraform_checksum }}"
+    mode: 0644
+  when: terraform_installed is changed or terraform_installed_version is changed
+- name: Install Terraform
+  unarchive:
+    src: /tmp/terraform_{{ terraform_version }}_linux_amd64.zip
+    dest: /usr/local/bin/
+  when: terraform_installed is changed or terraform_installed_version is changed

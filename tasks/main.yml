@@ -1,0 +1,7 @@
+---
+- import_tasks: packer.yml
+  when: packer_install is defined and packer_install|bool
+- import_tasks: terraform.yml
+  when: terraform_install is defined and terraform_install|bool
+- import_tasks: vault.yml
+  when: vault_install is defined and vault_install|bool
