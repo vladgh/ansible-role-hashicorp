@@ -1,0 +1,6 @@
+---
+galaxy_info:
+  role_name: hashicorp
+  author: Vlad Ghinea
+  description: Common Role
+  license: Apache v2
