@@ -5,7 +5,7 @@
   changed_when: packer_installed.rc != 0
   failed_when: false
 - name: Check Packer version
-  shell: packer --version
+  shell: packer --version 2>&1 | head -n 1
   register: packer_installed_version
   changed_when: packer_version not in packer_installed_version.stdout
   failed_when: false

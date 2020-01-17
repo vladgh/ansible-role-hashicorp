@@ -5,7 +5,7 @@
   changed_when: terraform_installed.rc != 0
   failed_when: false
 - name: Check Terraform version
-  shell: terraform --version
+  shell: terraform --version 2>&1 | head -n 1
   register: terraform_installed_version
   changed_when: terraform_version not in terraform_installed_version.stdout
   failed_when: false
