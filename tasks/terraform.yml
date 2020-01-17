@@ -1,5 +1,4 @@
 ---
-# Terraform
 - name: Check if Terraform is installed
   shell: command -v terraform >/dev/null 2>&1
   register: terraform_installed

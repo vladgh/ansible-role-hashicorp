@@ -1,5 +1,4 @@
 ---
-# Packer
 - name: Check if Packer is installed
   shell: command -v packer >/dev/null 2>&1
   register: packer_installed

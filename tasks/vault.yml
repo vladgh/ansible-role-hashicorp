@@ -1,5 +1,4 @@
 ---
-# Vault
 - name: Check if Vault is installed
   shell: command -v vault >/dev/null 2>&1
   register: vault_installed
