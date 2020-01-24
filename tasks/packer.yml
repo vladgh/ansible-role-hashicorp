@@ -13,7 +13,7 @@
   get_url:
     url: https://releases.hashicorp.com/packer/{{ packer_version }}/packer_{{ packer_version }}_linux_amd64.zip
     dest: /tmp/packer_{{ packer_version }}_linux_amd64.zip
-    checksum: "{{ packer_checksum }}"
+    checksum: sha256:https://releases.hashicorp.com/packer/{{ packer_version }}/packer_{{ packer_version }}_SHA256SUMS
     mode: 0644
   when: packer_installed is changed or packer_installed_version is changed
 - name: Install Packer

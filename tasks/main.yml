@@ -1,4 +1,9 @@
 ---
+- name: Ensure unzip exists
+  package:
+    name: unzip
+    state: present
+
 - import_tasks: packer.yml
   when: packer_install is defined and packer_install|bool
 - import_tasks: terraform.yml
