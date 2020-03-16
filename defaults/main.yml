@@ -1,4 +1,4 @@
 ---
 packer_version: "1.5.1"
-terraform_version: "0.12.20"
+terraform_version: "0.12.23"
 vault_version: "1.3.2"
