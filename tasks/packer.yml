@@ -1,23 +1,31 @@
 ---
 - name: Check if Packer is installed
-  shell: command -v packer >/dev/null 2>&1
+  shell: set -euo pipefail && command -v packer >/dev/null 2>&1
+  args:
+    executable: /bin/bash
   register: packer_installed
   changed_when: packer_installed.rc != 0
   failed_when: false
+
 - name: Check Packer version
-  shell: packer --version 2>&1 | head -n 1
+  shell: set -euo pipefail && packer --version 2>&1 | head -n 1
+  args:
+    executable: /bin/bash
   register: packer_installed_version
   changed_when: packer_version not in packer_installed_version.stdout
   failed_when: false
+
 - name: Download Packer
   get_url:
     url: https://releases.hashicorp.com/packer/{{ packer_version }}/packer_{{ packer_version }}_linux_amd64.zip
     dest: /tmp/packer_{{ packer_version }}_linux_amd64.zip
     checksum: sha256:https://releases.hashicorp.com/packer/{{ packer_version }}/packer_{{ packer_version }}_SHA256SUMS
-    mode: 0644
+    mode: '0644'
   when: packer_installed is changed or packer_installed_version is changed
+
 - name: Install Packer
   unarchive:
+    remote_src: yes
     src: /tmp/packer_{{ packer_version }}_linux_amd64.zip
     dest: /usr/local/bin/
   when: packer_installed is changed or packer_installed_version is changed
