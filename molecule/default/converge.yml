@@ -1,10 +1,6 @@
 ---
 - name: Converge
   hosts: all
-  vars:
-    - packer_install: 'yes'
-    - terraform_install: 'yes'
-    - vault_install: 'yes'
   tasks:
     - name: Include role
       include_role:
