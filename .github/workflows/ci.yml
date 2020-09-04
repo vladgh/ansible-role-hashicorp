@@ -1,6 +1,6 @@
 name: CI
 
-on: [push, pull_request]
+on: push
 
 jobs:
   test:
@@ -15,25 +15,23 @@ jobs:
           - ubuntu:20.04
           - debian:9
           - debian:10
-          - centos:7
-          - centos:8
     steps:
     - uses: actions/checkout@v2
       with:
-        path: vladgh.hashicorp
+        path: vladgh.common
     - name: Set up Python
       uses: actions/setup-python@v2
     - name: Install dependencies
       run: pip install molecule docker ansible-lint yamllint
-    - name: Test
-      run: cd vladgh.hashicorp && molecule test
+    - name: Test role
+      run: cd vladgh.common && molecule test
       env:
         MOLECULE_DISTRO: "${{ matrix.os }}"
   deploy:
     name: Deploy
     needs: test
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
     steps:
     - name: Set up Python
       uses: actions/setup-python@v2

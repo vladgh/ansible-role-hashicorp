@@ -9,7 +9,7 @@
   delay: 2
 
 - name: Ensure unzip exists
-  package:
+  apt:
     name: unzip
     state: present
 
