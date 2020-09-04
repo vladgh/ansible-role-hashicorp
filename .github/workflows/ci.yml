@@ -18,13 +18,13 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
-        path: vladgh.common
+        path: vladgh.hashicorp
     - name: Set up Python
       uses: actions/setup-python@v2
     - name: Install dependencies
       run: pip install molecule docker ansible-lint yamllint
     - name: Test role
-      run: cd vladgh.common && molecule test
+      run: cd vladgh.hashicorp && molecule test
       env:
         MOLECULE_DISTRO: "${{ matrix.os }}"
   deploy:
