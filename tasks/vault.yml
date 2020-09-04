@@ -20,7 +20,7 @@
     url: https://releases.hashicorp.com/vault/{{ vault_version }}/vault_{{ vault_version }}_linux_amd64.zip
     dest: /tmp/vault_{{ vault_version }}_linux_amd64.zip
     checksum: sha256:https://releases.hashicorp.com/vault/{{ vault_version }}/vault_{{ vault_version }}_SHA256SUMS
-    mode: '0644'
+    mode: 0644
   when: vault_installed is changed or vault_installed_version is changed
 
 - name: Install Vault
@@ -28,4 +28,5 @@
     remote_src: yes
     src: /tmp/vault_{{ vault_version }}_linux_amd64.zip
     dest: /usr/local/bin/
+    mode: 0755
   when: vault_installed is changed or vault_installed_version is changed
