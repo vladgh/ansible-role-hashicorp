@@ -3,6 +3,7 @@
   apt:
     name:
       - gnupg2
+      - apt-transport-https
     update_cache: yes
     state: "present"
 - name: Add Hashicorp Apt signing key
