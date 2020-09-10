@@ -1,18 +1,32 @@
 ---
-- name: Update Apt cache
+- name: Install role dependencies
   apt:
+    name:
+      - gnupg2
     update_cache: yes
-    cache_valid_time: "86400"  # One day
-  register: _update_apt_cache
-  until: _update_apt_cache is success
-  retries: 3
-  delay: 2
-
-- name: Ensure unzip exists
-  apt:
-    name: unzip
+    state: "present"
+- name: Add Hashicorp Apt signing key
+  apt_key:
+    url: https://apt.releases.hashicorp.com/gpg
     state: present
-
-- import_tasks: packer.yml
-- import_tasks: terraform.yml
-- import_tasks: vault.yml
+- name: Add Hashicorp repo configuration
+  apt_repository:
+    repo: "deb https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
+    filename: hashicorp
+    state: present
+  register: _hashicorp_repo
+- name: Install Hashicorp Packer
+  apt:
+    name: packer
+    state: present
+  when: install_packer is defined and install_packer
+- name: Install Hashicorp Terraform
+  apt:
+    name: terraform
+    state: present
+  when: install_terraform is defined and install_terraform
+- name: Install Hashicorp Vault
+  apt:
+    name: vault
+    state: present
+  when: install_vault is defined and install_vault

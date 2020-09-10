@@ -1,5 +1,4 @@
 ---
-# Hashicorp package versions
-packer_version: 1.6.2
-terraform_version: 0.13.2
-vault_version: 1.5.3
+install_packer: no
+install_terraform: no
+install_vault: no
